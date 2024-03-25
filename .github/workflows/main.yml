@@ -31,7 +31,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: airampik/my_app:latest
+        tags: airampik/esp8266:latest
         build-args: SHA=${{ github.sha }}
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}

@@ -2,6 +2,6 @@ version: '3'
 
 services:
   web:
-    image: airampik/my_app:latest
+    image: airampik/esp8266:latest
     ports:
       - "3000:3000"
