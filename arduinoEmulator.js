@@ -1,20 +1,26 @@
 const WebSocket = require('ws');
 
-const ws = new WebSocket('ws://localhost:3000');
+const ws = new WebSocket('ws://localhost:8080');
 
-ws.on('open', function open() {
-    console.log('Эмулятор Arduino подключен к серверу');
-   
+ws.on('open', () => {
+    console.log('Соединение установлено');
+
     setInterval(() => {
-        const data = {
-            type: 'sensorData',
-            temperature: Math.random() * 30,
-            humidity: Math.random() * 100
-        };
-        ws.send(JSON.stringify(data));
-    }, 5000);
+        const ampere = Math.random() * 10;
+        console.log(`Данные амперметра: ${ampere}`);
+        const ampereData = JSON.stringify({ source: 'arduinoEmulator', type: 'ampere', value: ampere });
+        ws.send(ampereData);
+    }, 10000); // Отправляем данные амперметра каждые 10 секунд
 });
 
-ws.on('message', function incoming(data) {
-    console.log(`Получена команда от сервера: ${data}`);
+ws.on('message', (message) => {
+    console.log(`Получено сообщение от сервера: ${message}`);
+});
+
+ws.on('close', () => {
+    console.log('Соединение закрыто');
+});
+
+ws.on('error', (error) => {
+    console.error('Произошла ошибка:', error.message);
 });

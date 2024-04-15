@@ -1,15 +1,25 @@
 const WebSocket = require('ws');
 
-const ws = new WebSocket('ws://localhost:3000');
+const ws = new WebSocket('ws://localhost:8080');
 
-ws.on('open', function open() {
-    console.log('Клиент подключен к серверу');
+ws.on('open', () => {
+    console.log('Соединение установлено');
+    // Отправляем данные 0 и 1 поочередно
     setInterval(() => {
-        const command = { type: 'lightControl', command: 'toggle' }; 
-        ws.send(JSON.stringify(command));
-    }, 10000); 
+        const data = Math.random() < 0.5 ? 0 : 1;
+        console.log(`Отправляю данные: ${data}`);
+        ws.send(data.toString());
+    }, 5000); // Отправляем данные каждые 5 секунд
 });
 
-ws.on('message', function incoming(data) {
-    console.log(`Получены данные с датчиков: ${data}`);
+ws.on('message', (message) => {
+    console.log(`Получено сообщение от сервера: ${message}`);
+});
+
+ws.on('close', () => {
+    console.log('Соединение закрыто');
+});
+
+ws.on('error', (error) => {
+    console.error('Произошла ошибка:', error.message);
 });
