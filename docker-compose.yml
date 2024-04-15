@@ -2,6 +2,6 @@ version: '3'
 
 services:
   web:
-    image: airampik/esp8266:latest
+    image: airampik/arduino:latest
     ports:
-      - "8080:3000"
+      - "3000:3000"
