@@ -1,5 +1,5 @@
 const WebSocket = require('ws');
-
+console.log('Привет, я сервер');
 const wss = new WebSocket.Server({ port: 8080 });
 
 let arduinoClient = null;
